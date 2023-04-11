@@ -1,26 +1,75 @@
 import React from "react";
 import Base from "../core/Base";
 import { isAutheticated } from "../auth/helper";
+import { Link } from "react-router-dom";
 
 const AdminDashboard = () => {
   const {
     user: { name, email, role },
-  } = isAutheticated;
+  } = isAutheticated();
 
   const adminLeftSide = () => {
-    //
+    return (
+      <div className="card">
+        <h4 className="card-header bg-dark text-white">Admin Navigation</h4>
+        <ul className="list-group">
+          <li className="list-group-item">
+            <Link to="/admin/create/category" className="nav-link text-info">
+              Create Categories
+            </Link>
+          </li>
+          <li className="list-group-item">
+            <Link to="/admin/create/product" className="nav-link text-info">
+              Create Product
+            </Link>
+          </li>
+          <li className="list-group-item">
+            <Link to="/admin/create/products" className="nav-link text-info">
+              Manage Products
+            </Link>
+          </li>
+          <li className="list-group-item">
+            <Link to="/admin/orders" className="nav-link text-info">
+              Manage Orders
+            </Link>
+          </li>
+        </ul>
+      </div>
+    );
   };
 
   const adminRightSide = () => {
-    //
+    return (
+      <div className="card text-left mb-4 ">
+        <h4 className="card-header bg-dark text-white">
+          Admin Information
+          <span className="badge badge-danger ml-3">Admin</span>
+        </h4>
+
+        <ul className="list-group">
+          <li className="list-group-item">
+            <span className="badge badge-success mr-2">Name:</span>
+            {name}
+          </li>
+          <li className="list-group-item">
+            <span className="badge badge-success mr-2">Email:</span>
+            {email}
+          </li>
+        </ul>
+      </div>
+    );
   };
 
   return (
     <Base
       title="welcom to admin panel"
       description="manage all your product & order hear"
+      className="container bg-dark p-4"
     >
-      <h1>This is profile page</h1>
+      <div className="row">
+        <div className="col-3">{adminLeftSide()}</div>
+        <div className="col-9">{adminRightSide()}</div>
+      </div>
     </Base>
   );
 };
