@@ -62,8 +62,8 @@ const AdminDashboard = () => {
 
   return (
     <Base
-      title="welcom to admin panel"
-      description="manage all your product & order hear"
+      title="Admin Panel"
+      description="Manage all your product & order hear"
       className="container bg-dark p-4"
     >
       <div className="row">
