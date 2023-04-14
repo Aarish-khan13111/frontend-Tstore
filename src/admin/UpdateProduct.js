@@ -83,6 +83,7 @@ const UpdateProduct = ({ match }) => {
   const onUpdate = (event) => {
     event.preventDefault();
     setValues({ ...values, error: "", loading: true });
+
     updateProduct(match.params.productId, user._id, token, formData)
       .then((data) => {
         if (data.error) {
@@ -123,7 +124,7 @@ const UpdateProduct = ({ match }) => {
     if (error) {
       return (
         <div className="alert alert-danger mt-3">
-          <h4>{createdProduct} Faild to update Category</h4>
+          <h4>{createdProduct} Faild to update Product</h4>
         </div>
       );
     }
