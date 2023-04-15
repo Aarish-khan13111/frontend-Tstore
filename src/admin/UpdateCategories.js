@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Base from "../core/Base";
 import { isAutheticated } from "../auth/helper";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 import { updateCategory, getCategory } from "./helper/adminapicall";
 
 const UpdateCategory = ({ match }) => {
@@ -9,7 +9,6 @@ const UpdateCategory = ({ match }) => {
 
   const [category, setCategory] = useState("");
   const [name, setName] = useState("");
-  const [formData, setFormData] = useState("");
   const [error, setError] = useState(false);
   const [success, setSuccess] = useState(false);
 
@@ -20,17 +19,14 @@ const UpdateCategory = ({ match }) => {
         // setValues({ ...values, error: data.error });
         setError({ error: data.error });
       } else {
-        setName({
-          name,
-        });
-        setFormData(new FormData());
+        setName(data);
       }
     });
   };
 
   useEffect(() => {
     preload(match.params.categoryId);
-  }, []);
+  });
 
   //TODO: work on it
   const onUpdate = (event) => {

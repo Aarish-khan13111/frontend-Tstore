@@ -3,13 +3,13 @@ import { Link } from "react-router-dom";
 
 function Footer() {
   return (
-    <div class="card text-center mx-3">
-      <div class="card-body">
-        <h5 class="card-title">Contact-us</h5>
-        <p class="card-text">
+    <div className="card text-center mx-3">
+      <div className="card-body">
+        <h5 className="card-title">Contact-us</h5>
+        <p className="card-text">
           With supporting text below as a natural lead-in to additional content.
         </p>
-        <Link href="#" class="btn btn-warning">
+        <Link to="/" className="btn btn-warning">
           Go somewhere
         </Link>
       </div>

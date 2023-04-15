@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import Base from "../core/Base";
 import { Link } from "react-router-dom";
-import { createProduct, getAllCategory } from "./helper/adminapicall";
-import { isAutheticated } from "../auth/helper";
+import { getAllCategory, createProduct } from "./helper/adminapicall";
+import { isAutheticated } from "../auth/helper/index";
 
 const AddProduct = () => {
   const { user, token } = isAutheticated();
@@ -18,7 +18,7 @@ const AddProduct = () => {
     loading: false,
     error: "",
     createdProduct: "",
-    getRedirect: false,
+    getaRedirect: false,
     formData: "",
   });
 
@@ -27,53 +27,49 @@ const AddProduct = () => {
     description,
     price,
     stock,
-    photo,
     categories,
-    category,
-    loading,
-    error,
+    // category,
+    // loading,
+    // error,
     createdProduct,
-    getRedirect,
+    // getaRedirect,
     formData,
   } = values;
 
   const preload = () => {
     getAllCategory().then((data) => {
-      console.log(data);
+      //console.log(data);
       if (data.error) {
         setValues({ ...values, error: data.error });
       } else {
         setValues({ ...values, categories: data, formData: new FormData() });
-        console.log("CAT", categories);
       }
     });
   };
 
   useEffect(() => {
     preload();
-  }, []);
+  });
 
   const onSubmit = (event) => {
     event.preventDefault();
     setValues({ ...values, error: "", loading: true });
-    createProduct(user._id, token, formData)
-      .then((data) => {
-        if (data.error) {
-          setValues({ ...values, error: data.error });
-        } else {
-          setValues({
-            ...values,
-            name: "",
-            description: "",
-            price: "",
-            photo: "",
-            stock: "",
-            loading: false,
-            createdProduct: data.name,
-          });
-        }
-      })
-      .catch();
+    createProduct(user._id, token, formData).then((data) => {
+      if (data.error) {
+        setValues({ ...values, error: data.error });
+      } else {
+        setValues({
+          ...values,
+          name: "",
+          description: "",
+          price: "",
+          photo: "",
+          stock: "",
+          loading: false,
+          createdProduct: data.name,
+        });
+      }
+    });
   };
 
   const handleChange = (name) => (event) => {
@@ -82,7 +78,6 @@ const AddProduct = () => {
     setValues({ ...values, [name]: value });
   };
 
-  //success Message
   const successMessage = () => (
     <div
       className="alert alert-success mt-3"
@@ -92,10 +87,21 @@ const AddProduct = () => {
     </div>
   );
 
-  //create product form
   const createProductForm = () => (
     <form>
-      <div className="form-group mt-3">
+      <span>Post photo</span>
+      <div className="form-group">
+        <label className="btn btn-block btn-success">
+          <input
+            onChange={handleChange("photo")}
+            type="file"
+            name="photo"
+            accept="image"
+            placeholder="choose a file"
+          />
+        </label>
+      </div>
+      <div className="form-group">
         <input
           onChange={handleChange("name")}
           name="photo"
@@ -128,7 +134,7 @@ const AddProduct = () => {
           className="form-control"
           placeholder="Category"
         >
-          <option>Select Category</option>
+          <option>Select</option>
           {categories &&
             categories.map((cate, index) => (
               <option key={index} value={cate._id}>
@@ -142,38 +148,31 @@ const AddProduct = () => {
           onChange={handleChange("stock")}
           type="number"
           className="form-control"
-          placeholder="Quantity"
+          placeholder="Stock"
           value={stock}
         />
       </div>
-      <div className="form-group">
-        <label className="btn btn-block btn-info mt-3 border rounded">
-          <span className="text-white mr-3">Post photo</span>
-          <input
-            onChange={handleChange("photo")}
-            type="file"
-            name="photo"
-            accept="image"
-            placeholder="choose a file"
-          />
-        </label>
-      </div>
+
       <button
         type="submit"
         onClick={onSubmit}
-        className="btn btn-outline-info mb-3"
+        className="btn btn-outline-success mb-3"
       >
         Create Product
       </button>
     </form>
   );
+
   return (
     <Base
-      title="Add Product"
-      description="Welcome to Add product section"
-      className="container bg-dark p-4"
+      title="Add a product here!"
+      description="Welcome to product creation section"
+      className="container bg-info p-4"
     >
-      <div className="row bg-light rounded">
+      <Link to="/admin/dashboard" className="btn btn-md btn-dark mb-3">
+        Admin Home
+      </Link>
+      <div className="row bg-dark text-white rounded">
         <div className="col-md-8 offset-md-2">
           {successMessage()}
           {createProductForm()}

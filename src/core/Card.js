@@ -1,14 +1,17 @@
 import React from "react";
+import "../styles.css";
 import ImageHelper from "./helper/ImageHelper";
+import { API } from "../backend";
 
 const Card = ({ product, addtoCart = true, removeFromCart = false }) => {
+  const cardTitle = product ? product.name : "Title unknown";
+  const cardDescription = product ? product.description : "Default description";
+  const cardPrice = product ? product.price : "DEAFULT";
+
   const showAddToCart = (addtoCart) => {
     return (
       addtoCart && (
-        <button
-          onClick={() => {}}
-          className="btn btn-block btn-outline-success mt-2 mb-2"
-        >
+        <button onClick={() => {}} className="btn rounded btn-info mt-2 mb-2">
           Add to Cart
         </button>
       )
@@ -28,19 +31,23 @@ const Card = ({ product, addtoCart = true, removeFromCart = false }) => {
     );
   };
   return (
-    <div className="card text-white bg-light border border-dark ">
-      <div className="card-body">
-        <ImageHelper product={product} />
-        <p className="lead bg-success font-weight-normal text-wrap mt-2">
-          this photo looks great
-        </p>
-        <p className="btn btn-success rounded  btn-sm px-4"> price:$ 5</p>
-        <div className="row">
-          <div className="col-12">{showAddToCart(addtoCart)}</div>
-          <div className="col-12">{showRemoveToCart(removeFromCart)}</div>
+    <section class="articles">
+      <article>
+        <div className="article-wrapper">
+          <figure>
+            {/* //TODO: write props Product={product} */}
+            <ImageHelper product={product} />
+          </figure>
+          <div className="article-body">
+            <h2>{cardTitle}</h2>
+            <p>{cardDescription}</p>
+            <p>Price:- {cardPrice}</p>
+            {showAddToCart(addtoCart)}
+            {showRemoveToCart(removeFromCart)}
+          </div>
         </div>
-      </div>
-    </div>
+      </article>
+    </section>
   );
 };
 
